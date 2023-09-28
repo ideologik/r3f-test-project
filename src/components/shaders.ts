@@ -1,6 +1,6 @@
 import { ShaderMaterial } from "three";
 
-const shader = new ShaderMaterial({
+export const shaderRed = new ShaderMaterial({
   vertexShader: `
     precision highp float;
 
@@ -20,5 +20,3 @@ const shader = new ShaderMaterial({
     }
   `,
 });
-
-export default shader;
