@@ -1,0 +1,17 @@
+/* Scene360.css */
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.handsOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  pointer-events: none; /* Esto previene cualquier tipo de interacción con el elemento */
+  user-drag: none; /* Esto previene que el elemento sea arrastrable */
+  user-select: none; /* Esto previene la selección del elemento */
+}
