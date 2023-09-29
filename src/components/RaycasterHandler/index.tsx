@@ -1,14 +1,14 @@
 import { useThree, useFrame } from "@react-three/fiber";
 import { useState, useEffect } from "react";
-import { Raycaster, Mesh, Vector2 } from "three";
+import { Object3D, Raycaster, Vector2 } from "three";
 
 type RaycasterHandlerProps = {
-  fireMeshRefs: React.RefObject<Mesh>[];
+  fireObject3DRefs: React.RefObject<Object3D>[];
   raycaster: Raycaster;
 };
 
 const RaycasterHandler: React.FC<RaycasterHandlerProps> = ({
-  fireMeshRefs,
+  fireObject3DRefs: fireMeshRefs,
   raycaster,
 }) => {
   console.log("rendering raycaster handler");
@@ -16,7 +16,6 @@ const RaycasterHandler: React.FC<RaycasterHandlerProps> = ({
   const [fireHit, setFireHit] = useState<number | null>(null);
 
   const handleMouseClick = (event: MouseEvent) => {
-    console.log(fireHit);
     if (event.button === 2 && fireHit !== null) {
       const fireMesh = fireMeshRefs[fireHit].current;
       if (fireMesh) {
@@ -41,6 +40,10 @@ const RaycasterHandler: React.FC<RaycasterHandlerProps> = ({
       if (fireMesh) {
         const intersects = raycaster.intersectObject(fireMesh);
         if (intersects.length > 0) {
+          console.log(
+            `Intersect detected with fireMesh at index: ${index}`,
+            intersects.length
+          );
           hitDetected = index;
         }
       }
