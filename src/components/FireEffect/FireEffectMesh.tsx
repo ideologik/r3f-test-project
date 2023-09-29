@@ -5,7 +5,7 @@ type FireEffectProps = {
   position: Vector3;
 };
 
-const FireEffect = forwardRef<Mesh, FireEffectProps>((props, ref) => {
+const FireEffectMesh = forwardRef<Mesh, FireEffectProps>((props, ref) => {
   console.log("rendering fire effect");
   const position = props.position;
   // Este componente representaría tu efecto de fuego y humo.
@@ -20,4 +20,4 @@ const FireEffect = forwardRef<Mesh, FireEffectProps>((props, ref) => {
   );
 });
 
-export default FireEffect;
+export default FireEffectMesh;

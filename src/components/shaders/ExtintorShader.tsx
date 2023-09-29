@@ -145,8 +145,8 @@ const ExtintorShader = () => {
   });
 
   // Carga las texturas.
-  const texture1 = useLoader(TextureLoader, "/channel0.png");
-  const texture2 = useLoader(TextureLoader, "/channel1.png");
+  const texture1 = useLoader(TextureLoader, "/images/shaders/channel0.png");
+  const texture2 = useLoader(TextureLoader, "/images/shaders/channel1.png");
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>

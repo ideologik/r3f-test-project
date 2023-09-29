@@ -2,7 +2,7 @@ import { TextureLoader, BackSide } from "three";
 import { Sphere } from "@react-three/drei";
 
 export default function Environment360() {
-  const texture = new TextureLoader().load("/oficina360.jpg");
+  const texture = new TextureLoader().load("/images/360/oficina360.jpg");
 
   return (
     <mesh>

@@ -1,9 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { Raycaster, Mesh, Vector3 } from "three";
+import { Raycaster, Vector3, Points } from "three";
 import Controls from "../Controls";
 import Environment360 from "../Environment360";
-import FireEffect from "../FireEffect";
+import FireEffectMesh from "../FireEffect/FireEffectMesh";
 import RaycasterHandler from "../RaycasterHandler";
 import RaycasterVisualHelper from "../RaycasterVisualHelper";
 import "./Scene360.css";
@@ -13,10 +13,10 @@ export default function Scene360() {
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
   const numberOfFires = 5;
-  const fireMeshRefs = useRef<React.RefObject<Mesh>[]>(
+  const fireMeshRefs = useRef<React.RefObject<Points>[]>(
     Array(numberOfFires)
       .fill(null)
-      .map(() => React.createRef<Mesh>())
+      .map(() => React.createRef<Points>())
   );
 
   const generateRandomPosition = () => {
@@ -35,7 +35,7 @@ export default function Scene360() {
         <ambientLight />
         <Environment360 />
         {Array.from({ length: numberOfFires }).map((_, index) => (
-          <FireEffect
+          <FireEffectMesh
             ref={fireMeshRefs.current[index]}
             position={generateRandomPosition()}
             key={index}
@@ -43,14 +43,14 @@ export default function Scene360() {
         ))}
         <Controls />
         <RaycasterHandler
-          fireMeshRefs={fireMeshRefs.current}
+          fireObject3DRefs={fireMeshRefs.current}
           raycaster={raycaster.current}
         />
         <RaycasterVisualHelper raycaster={raycaster.current} />
         {/* Pasa raycaster aquí */}
       </Canvas>
       <img
-        src="/pov.png"
+        src="/images/pov.png"
         alt="Hands"
         className="handsOverlay"
         draggable="false"
