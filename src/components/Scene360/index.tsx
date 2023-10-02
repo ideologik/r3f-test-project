@@ -1,10 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { Raycaster, Vector3, Mesh } from "three";
+import { Raycaster, Vector3, Mesh, Euler } from "three";
 import Controls from "../Controls";
 import Environment360 from "../Environment360";
 import RaycasterHandler from "../RaycasterHandler";
-import RaycasterVisualHelper from "../RaycasterVisualHelper";
 import "./Scene360.css";
 import FireEffectVideo from "../FireEffect/FireEffectVideo";
 
@@ -12,22 +11,25 @@ export default function Scene360() {
   console.log("rendering");
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
-  const numberOfFires = 5;
+  const numberOfFires = 2;
+  const positions = [new Vector3(2, -0.3, -2.9), new Vector3(-2, -0.3, 3.1)];
+  const rotations = [new Euler(0, 0, 0), new Euler(0, Math.PI, 0)];
+
   const fireMeshRefs = useRef<React.RefObject<Mesh>[]>(
     Array(numberOfFires)
       .fill(null)
       .map(() => React.createRef<Mesh>())
   );
 
-  const generateRandomPosition = () => {
-    const randomPosition = new Vector3(
-      Math.random() * 1 - 0.2,
-      Math.random() * 0.6 - 0.3,
-      Math.random() * 1.3 - 0.5
-    );
-    console.log(randomPosition);
-    return randomPosition;
-  };
+  // const generateRandomPosition = () => {
+  //   const randomPosition = new Vector3(
+  //     Math.random() * 1 - 0.2,
+  //     Math.random() * 0.6 - 0.3,
+  //     Math.random() * 1.3 - 0.5
+  //   );
+  //   console.log(randomPosition);
+  //   return randomPosition;
+  // };
 
   return (
     <div className="container">
@@ -37,11 +39,12 @@ export default function Scene360() {
         {Array.from({ length: numberOfFires }).map((_, index) => (
           <FireEffectVideo
             key={index}
-            position={generateRandomPosition()}
+            position={positions[index]}
+            rotation={rotations[index]}
             ref={fireMeshRefs.current[index]}
-            videoUrl="public/video/fuego2.webm"
-            width={2 / 9}
-            height={2 / 16}
+            videoUrl="/video/fuego2.webm"
+            width={18 / 9}
+            height={18 / 16}
           />
         ))}
         <Controls />
@@ -49,7 +52,7 @@ export default function Scene360() {
           fireObject3DRefs={fireMeshRefs.current}
           raycaster={raycaster.current}
         />
-        <RaycasterVisualHelper raycaster={raycaster.current} />
+        {/* <RaycasterVisualHelper raycaster={raycaster.current} /> */}
         {/* Pasa raycaster aquí */}
       </Canvas>
       <img

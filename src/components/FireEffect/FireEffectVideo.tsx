@@ -6,6 +6,7 @@ import {
   Vector3,
   MeshBasicMaterial,
   DoubleSide,
+  Euler,
 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { Plane } from "@react-three/drei";
@@ -15,10 +16,12 @@ type FireEffectVideoProps = {
   width: number;
   height: number;
   position: Vector3;
+  rotation?: Euler;
+  doubleSide?: boolean;
 };
 
 const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
-  const { videoUrl, width, height, position } = props;
+  const { videoUrl, width, height, position, rotation, doubleSide } = props;
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [userInteracted, setUserInteracted] = useState(false);
 
@@ -97,12 +100,17 @@ const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
 
   return (
     <>
-      <Plane ref={ref} args={[width, height]} position={position}>
+      <Plane
+        ref={ref}
+        args={[width, height]}
+        position={position}
+        rotation={rotation}
+      >
         <meshBasicMaterial
           attach="material"
           //transparent
           blending={AdditiveBlending}
-          side={DoubleSide}
+          side={doubleSide ? DoubleSide : undefined}
           map={
             videoRef.current ? new VideoTexture(videoRef.current) : undefined
           }

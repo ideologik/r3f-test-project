@@ -6,7 +6,7 @@ export default function Environment360() {
 
   return (
     <mesh>
-      <Sphere>
+      <Sphere args={[5, 25, 25]}>
         <meshBasicMaterial attach="material" map={texture} side={BackSide} />
       </Sphere>
     </mesh>
