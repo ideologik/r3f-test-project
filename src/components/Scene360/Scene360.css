@@ -6,6 +6,7 @@
 }
 
 .handsOverlay {
+  /* mix-blend-mode: screen; */
   position: absolute;
   bottom: 0;
   left: 50%;

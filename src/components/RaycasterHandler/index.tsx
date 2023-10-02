@@ -11,7 +11,7 @@ const RaycasterHandler: React.FC<RaycasterHandlerProps> = ({
   fireObject3DRefs: fireMeshRefs,
   raycaster,
 }) => {
-  console.log("rendering raycaster handler");
+  //console.log("rendering raycaster handler");
   const { camera, gl } = useThree();
   const [fireHit, setFireHit] = useState<number | null>(null);
 
@@ -40,10 +40,10 @@ const RaycasterHandler: React.FC<RaycasterHandlerProps> = ({
       if (fireMesh) {
         const intersects = raycaster.intersectObject(fireMesh);
         if (intersects.length > 0) {
-          console.log(
-            `Intersect detected with fireMesh at index: ${index}`,
-            intersects.length
-          );
+          // console.log(
+          //   `Intersect detected with fireMesh at index: ${index}`,
+          //   intersects.length
+          // );
           hitDetected = index;
         }
       }

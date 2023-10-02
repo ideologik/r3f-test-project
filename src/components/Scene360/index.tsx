@@ -1,22 +1,22 @@
 import { Canvas } from "@react-three/fiber";
 import React, { useRef } from "react";
-import { Raycaster, Vector3, Points } from "three";
+import { Raycaster, Vector3, Mesh } from "three";
 import Controls from "../Controls";
 import Environment360 from "../Environment360";
-import FireEffectMesh from "../FireEffect/FireEffectMesh";
 import RaycasterHandler from "../RaycasterHandler";
 import RaycasterVisualHelper from "../RaycasterVisualHelper";
 import "./Scene360.css";
+import FireEffectVideo from "../FireEffect/FireEffectVideo";
 
 export default function Scene360() {
   console.log("rendering");
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
   const numberOfFires = 5;
-  const fireMeshRefs = useRef<React.RefObject<Points>[]>(
+  const fireMeshRefs = useRef<React.RefObject<Mesh>[]>(
     Array(numberOfFires)
       .fill(null)
-      .map(() => React.createRef<Points>())
+      .map(() => React.createRef<Mesh>())
   );
 
   const generateRandomPosition = () => {
@@ -35,10 +35,13 @@ export default function Scene360() {
         <ambientLight />
         <Environment360 />
         {Array.from({ length: numberOfFires }).map((_, index) => (
-          <FireEffectMesh
-            ref={fireMeshRefs.current[index]}
-            position={generateRandomPosition()}
+          <FireEffectVideo
             key={index}
+            position={generateRandomPosition()}
+            ref={fireMeshRefs.current[index]}
+            videoUrl="public/video/fuego2.webm"
+            width={2 / 9}
+            height={2 / 16}
           />
         ))}
         <Controls />
