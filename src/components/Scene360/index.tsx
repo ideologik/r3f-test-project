@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Raycaster, Vector3, Mesh, Euler } from "three";
 import Controls from "../Controls";
 import Environment360 from "../Environment360";
@@ -9,6 +9,7 @@ import FireEffectVideo from "../FireEffect/FireEffectVideo";
 
 export default function Scene360() {
   console.log("rendering");
+  const [hasStarted, setHasStarted] = useState(false);
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
   const numberOfFires = 2;
@@ -32,35 +33,44 @@ export default function Scene360() {
   // };
 
   return (
-    <div className="container">
-      <Canvas camera={{ position: [0, 0, 0.1], near: 0.1, far: 1000 }}>
-        <ambientLight />
-        <Environment360 />
-        {Array.from({ length: numberOfFires }).map((_, index) => (
-          <FireEffectVideo
-            key={index}
-            position={positions[index]}
-            rotation={rotations[index]}
-            ref={fireMeshRefs.current[index]}
-            videoUrl="/video/fuego2.webm"
-            width={18 / 9}
-            height={18 / 16}
+    <>
+      {!hasStarted && (
+        <div className="startButtonContainer">
+          <button onClick={() => setHasStarted(true)} className="startButton">
+            Comenzar
+          </button>
+        </div>
+      )}
+
+      <div className="container">
+        <Canvas camera={{ position: [0, 0, 0.1], near: 0.1, far: 1000 }}>
+          <ambientLight />
+          <Environment360 />
+          {true &&
+            Array.from({ length: numberOfFires }).map((_, index) => (
+              <FireEffectVideo
+                key={index}
+                position={positions[index]}
+                rotation={rotations[index]}
+                ref={fireMeshRefs.current[index]}
+                videoUrl="/video/fuego2.webm"
+                width={18 / 9}
+                height={18 / 16}
+              />
+            ))}
+          <Controls />
+          <RaycasterHandler
+            fireObject3DRefs={fireMeshRefs.current}
+            raycaster={raycaster.current}
           />
-        ))}
-        <Controls />
-        <RaycasterHandler
-          fireObject3DRefs={fireMeshRefs.current}
-          raycaster={raycaster.current}
+        </Canvas>
+        <img
+          src="/images/pov.png"
+          alt="Hands"
+          className="handsOverlay"
+          draggable="false"
         />
-        {/* <RaycasterVisualHelper raycaster={raycaster.current} /> */}
-        {/* Pasa raycaster aquí */}
-      </Canvas>
-      <img
-        src="/images/pov.png"
-        alt="Hands"
-        className="handsOverlay"
-        draggable="false"
-      />
-    </div>
+      </div>
+    </>
   );
 }

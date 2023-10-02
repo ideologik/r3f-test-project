@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect, useState } from "react";
+import { forwardRef, useRef, useEffect } from "react";
 import {
   Mesh,
   VideoTexture,
@@ -23,26 +23,26 @@ type FireEffectVideoProps = {
 const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
   const { videoUrl, width, height, position, rotation, doubleSide } = props;
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [userInteracted, setUserInteracted] = useState(false);
+  // const [userInteracted, setUserInteracted] = useState(false);
 
-  useEffect(() => {
-    if (videoRef.current && userInteracted) {
-      videoRef.current.play();
-    }
-  }, [userInteracted]);
-  useEffect(() => {
-    const handleUserInteraction = () => {
-      setUserInteracted(true);
-      // Eliminar el evento después de que ha sido disparado una vez
-      window.removeEventListener("click", handleUserInteraction);
-    };
+  // useEffect(() => {
+  //   if (videoRef.current && userInteracted) {
+  //     videoRef.current.play();
+  //   }
+  // }, [userInteracted]);
+  // useEffect(() => {
+  //   const handleUserInteraction = () => {
+  //     setUserInteracted(true);
+  //     // Eliminar el evento después de que ha sido disparado una vez
+  //     window.removeEventListener("click", handleUserInteraction);
+  //   };
 
-    window.addEventListener("click", handleUserInteraction);
+  //   window.addEventListener("click", handleUserInteraction);
 
-    return () => {
-      window.removeEventListener("click", handleUserInteraction);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("click", handleUserInteraction);
+  //   };
+  // }, []);
   useEffect(() => {
     // Crear el elemento video
     const videoElem = document.createElement("video");
@@ -102,7 +102,7 @@ const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
     <>
       <Plane
         ref={ref}
-        args={[width, height]}
+        args={videoRef.current?.played ? [width, height] : [0, 0]}
         position={position}
         rotation={rotation}
       >
