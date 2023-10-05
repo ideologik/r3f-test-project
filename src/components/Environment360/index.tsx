@@ -1,13 +1,55 @@
-import { TextureLoader, BackSide } from "three";
+import { useEffect, useRef, useState } from "react";
+import { Texture, TextureLoader, BackSide, AdditiveBlending } from "three";
 import { Sphere } from "@react-three/drei";
 
-export default function Environment360() {
-  const texture = new TextureLoader().load("/images/360/oficina360.jpg");
+interface Props {
+  lowResImg?: string;
+  highResImg: string;
+  blendingOn?: boolean;
+}
+
+export default function Environment360({
+  lowResImg,
+  highResImg,
+  blendingOn = false,
+}: Props) {
+  const textureRef = useRef<Texture | null>(null);
+  const [, forceUpdate] = useState({}); // Este estado es solo para forzar la actualización
+
+  useEffect(() => {
+    if (lowResImg) {
+      new TextureLoader().load(lowResImg, (lowResTexture) => {
+        console.log("lowResTexture");
+        textureRef.current = lowResTexture;
+        forceUpdate({}); // Forzar re-render
+
+        new TextureLoader().load(highResImg, (highResTexture) => {
+          console.log("highResTexture");
+          textureRef.current = highResTexture;
+          forceUpdate({}); // Forzar re-render
+        });
+      });
+    } else {
+      new TextureLoader().load(highResImg, (highResTexture) => {
+        textureRef.current = highResTexture;
+        forceUpdate({}); // Forzar re-render
+      });
+    }
+  }, [lowResImg, highResImg]);
+
+  if (!textureRef.current) {
+    return null; // No renderices nada hasta que la textura esté disponible
+  }
 
   return (
     <mesh>
       <Sphere args={[5, 25, 25]}>
-        <meshBasicMaterial attach="material" map={texture} side={BackSide} />
+        <meshBasicMaterial
+          blending={blendingOn ? AdditiveBlending : undefined}
+          attach="material"
+          map={textureRef.current}
+          side={BackSide}
+        />
       </Sphere>
     </mesh>
   );

@@ -9,7 +9,7 @@ import FireEffectVideo from "../FireEffect/FireEffectVideo";
 
 export default function Scene360() {
   console.log("rendering");
-  const [hasStarted, setHasStarted] = useState(false);
+  const [hasStarted, setHasStarted] = useState(true);
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
   const numberOfFires = 2;
@@ -45,8 +45,15 @@ export default function Scene360() {
       <div className="container">
         <Canvas camera={{ position: [0, 0, 0.1], near: 0.1, far: 1000 }}>
           <ambientLight />
-          <Environment360 />
-          {true &&
+          <Environment360
+            highResImg="/images/360/Oficina_360_01_Entrada.jpeg"
+            lowResImg="/images/360/Oficina_360_01_Entrada_lr.jpeg"
+          />
+          <Environment360
+            highResImg="/images/360/Oficina_360_01_EntradaGlow.jpeg"
+            blendingOn={true}
+          />
+          {false &&
             Array.from({ length: numberOfFires }).map((_, index) => (
               <FireEffectVideo
                 key={index}
