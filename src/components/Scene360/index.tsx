@@ -9,7 +9,7 @@ import FireEffectVideo from "../FireEffect/FireEffectVideo";
 
 export default function Scene360() {
   console.log("rendering");
-  const [hasStarted, setHasStarted] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
   const numberOfFires = 2;
@@ -53,7 +53,7 @@ export default function Scene360() {
             highResImg="/images/360/Oficina_360_01_EntradaGlow.jpeg"
             blendingOn={true}
           />
-          {false &&
+          {true &&
             Array.from({ length: numberOfFires }).map((_, index) => (
               <FireEffectVideo
                 key={index}

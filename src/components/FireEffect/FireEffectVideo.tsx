@@ -98,6 +98,12 @@ const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
     }
   });
 
+  useEffect(() => {
+    if (typeof ref !== "function" && ref?.current) {
+      ref.current.renderOrder = 999;
+    }
+  }, [ref]);
+
   return (
     <>
       <Plane
@@ -108,7 +114,7 @@ const FireEffectVideo = forwardRef<Mesh, FireEffectVideoProps>((props, ref) => {
       >
         <meshBasicMaterial
           attach="material"
-          //transparent
+          transparent={true}
           blending={AdditiveBlending}
           side={doubleSide ? DoubleSide : undefined}
           map={
