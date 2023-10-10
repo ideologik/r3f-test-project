@@ -6,6 +6,7 @@ import Environment360 from "../Environment360";
 import RaycasterHandler from "../RaycasterHandler";
 import "./Scene360.css";
 import FireEffectVideo from "../FireEffect/FireEffectVideo";
+import { Dome360Fire } from "../Environment360/Dome360Fire";
 
 export default function Scene360() {
   console.log("rendering");
@@ -45,7 +46,17 @@ export default function Scene360() {
       <div className="container">
         <Canvas camera={{ position: [0, 0, 0.1], near: 0.1, far: 1000 }}>
           <ambientLight />
-          <Environment360
+          <Dome360Fire
+            videos={[
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel1.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel2.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel3.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel4.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel5.mp4",
+            ]}
+            tiempoLimite={5000}
+          />
+          {/* <Environment360
             highResImg="/images/360/Oficina_360_01_Entrada.jpeg"
             lowResImg="/images/360/Oficina_360_01_Entrada_lr.jpeg"
           />
@@ -65,11 +76,11 @@ export default function Scene360() {
                 height={18 / 16}
               />
             ))}
-          <Controls />
-          <RaycasterHandler
+            <RaycasterHandler
             fireObject3DRefs={fireMeshRefs.current}
             raycaster={raycaster.current}
-          />
+          /> */}
+          <Controls />
         </Canvas>
         <img
           src="/images/pov.png"
