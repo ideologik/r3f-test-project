@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Texture, TextureLoader, BackSide, AdditiveBlending } from "three";
-import { Sphere } from "@react-three/drei";
+import { Texture, TextureLoader, AdditiveBlending, BackSide } from "three";
+import { Sphere } from "@react-three/drei"
 
 interface Props {
   lowResImg?: string;
@@ -42,13 +42,14 @@ export default function Environment360({
   }
 
   return (
-    <mesh>
-      <Sphere args={[5, 25, 25]}>
+    <mesh scale={[-1, 1, 1]}>
+      <Sphere args={[0.9, 25, 25]}>
         <meshBasicMaterial
           blending={blendingOn ? AdditiveBlending : undefined}
           attach="material"
           map={textureRef.current}
           side={BackSide}
+          
         />
       </Sphere>
     </mesh>

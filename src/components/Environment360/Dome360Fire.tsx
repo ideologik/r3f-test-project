@@ -1,3 +1,4 @@
+import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
@@ -35,8 +36,8 @@ export const Dome360Fire = ({ videos, tiempoLimite }: Props) => {
       setVideosReady(true);
     } else {
       const handleCanPlay = () => {
+        setVideosReady(true);
         if (allVideosReady()) {
-          setVideosReady(true);
         }
       };
       videoRefs.current.forEach((video) => {
@@ -51,10 +52,13 @@ export const Dome360Fire = ({ videos, tiempoLimite }: Props) => {
   }, []);
 
   useEffect(() => {
+
     const increaseFire = () => {
       setFireLevel((prev) => Math.min(prev + 1, 4));
     };
+
     const fireInterval = setInterval(increaseFire, tiempoLimite);
+
     return () => {
       clearInterval(fireInterval);
     };
@@ -74,24 +78,38 @@ export const Dome360Fire = ({ videos, tiempoLimite }: Props) => {
     return () => {
       window.removeEventListener("contextmenu", handleMouseClick);
     };
+
   }, [fireLevel]);
 
   useFrame(() => {
     if (videosReady && videoTextures[fireLevel].image.readyState === 4) {
-      videoTextures[fireLevel].image.play();
+
+      videoTextures.forEach((el) => {
+        if (el !== videoTextures[fireLevel] && !(el.image.paused)) {
+          el.image.pause();
+        } else {
+          videoTextures[fireLevel].image.play();
+
+        }
+      })
+
     }
   });
 
   return (
     videosReady && ( // Renderizar solo cuando los videos estén listos
-      <mesh scale={[-1, 1, 1]}>
-        <sphereGeometry args={[500, 100, 40]} />
-        <meshBasicMaterial
-          attach="material"
-          map={videoTextures[fireLevel]}
-          side={THREE.DoubleSide}
-          transparent
-        />
+      <mesh scale={[-1, 1, 1]}  >
+        <Sphere args={[0.8, 25, 25]}>
+          <meshBasicMaterial
+            attach="material"
+            map={videoTextures[fireLevel]}
+            side={THREE.BackSide}
+            blending={THREE.CustomBlending}
+            blendEquation={THREE.MaxEquation}
+            blendSrc={THREE.SrcAlphaFactor}
+            blendDst={THREE.OneMinusSrcAlphaFactor}
+          />
+        </Sphere>
       </mesh>
     )
   );

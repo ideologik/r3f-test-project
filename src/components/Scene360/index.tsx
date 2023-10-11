@@ -9,7 +9,7 @@ import FireEffectVideo from "../FireEffect/FireEffectVideo";
 import { Dome360Fire } from "../Environment360/Dome360Fire";
 
 export default function Scene360() {
-  console.log("rendering");
+
   const [hasStarted, setHasStarted] = useState(false);
   const raycaster = useRef(new Raycaster()); // Define raycaster aquí
 
@@ -48,18 +48,20 @@ export default function Scene360() {
           <ambientLight />
           <Dome360Fire
             videos={[
-              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel1.mp4",
-              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel2.mp4",
-              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel3.mp4",
-              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel4.mp4",
-              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/extintores/Oficina_360_04_IncendioNivel5.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/test/v2_Oficina_360_04_IncendioNivel1_FuegoSolo.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/test/v2_Oficina_360_04_IncendioNivel2_FuegoSolo.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/test/v2_Oficina_360_04_IncendioNivel3_FuegoSolo.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/test/v1_Oficina_360_04_IncendioNivel3_FuegoSolo.mp4",
+              "https://smartraining-streaming.s3.sa-east-1.amazonaws.com/test/test/v1_Oficina_360_04_IncendioNivel3_FuegoSolo.mp4"
             ]}
-            tiempoLimite={5000}
+            tiempoLimite={10000}
           />
-          {/* <Environment360
-            highResImg="/images/360/Oficina_360_01_Entrada.jpeg"
+          <Environment360
+            highResImg="/images/360/Oficina_360_04_IncendioNivel0.jpeg"
             lowResImg="/images/360/Oficina_360_01_Entrada_lr.jpeg"
           />
+
+          {/* 
           <Environment360
             highResImg="/images/360/Oficina_360_01_EntradaGlow.jpeg"
             blendingOn={true}
